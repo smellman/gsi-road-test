@@ -32,6 +32,29 @@
                     enableHighAccuracy: true
                 }
             }), 'top-left');
+            map.on('click', 'gsi-road', function(e) {
+                var feature = e.features[0];
+                var description = "";
+                if (feature.properties["rdCtg"] === 0) {
+                    description = "国道";
+                } else if (feature.properties["rdCtg"] === 1) {
+                    description = "県道";
+                } else if (feature.properties["rdCtg"] === 2) {
+                    description = "市道";
+                } else {
+                    return
+                }
+                new mapboxgl.Popup()
+                    .setLngLat(e.lngLat)
+                    .setHTML(description)
+                    .addTo(map);
+            });
+            map.on('mouseenter', 'gsi-road', function() {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+            map.on('mouseleave', 'gsi-road', function() {
+                map.getCanvas().style.cursor = '';
+            });
         </script>
     </body>
 </html>

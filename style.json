@@ -31,7 +31,7 @@
       "maxzoom": 18
     },
     {
-      "id": "gsi-moterway",
+      "id": "gsi-road",
       "type": "line",
       "source": "gsi-vector",
       "source-layer": "road",
