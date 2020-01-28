@@ -1,0 +1,84 @@
+{
+  "version": 8,
+  "name": "GSI Center Line",
+  "sources": {
+    "osm": {
+      "type": "raster",
+      "tiles": [
+        "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      ],
+      "minzoom": 0,
+      "maxzoom": 18,
+      "attribution": "map data © OpenStreetMap contributors"
+    },
+    "gsi-vector": {
+      "type": "vector",
+      "tiles": [
+        "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 5,
+      "maxzoom": 16
+    }
+  },
+  "layers": [
+    {
+      "id": "osm",
+      "type": "raster",
+      "source": "osm",
+      "minzoom": 0,
+      "maxzoom": 18
+    },
+    {
+      "id": "gsi-moterway",
+      "type": "line",
+      "source": "gsi-vector",
+      "source-layer": "road",
+      "minzoom": 5,
+      "maxzoom": 18,
+      "filter": [
+        "all",
+        [
+          "!=",
+          "moterway",
+          0
+        ]
+      ],
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "rdCtg"
+            ],
+            0
+          ],
+          "rgba(0, 255, 0, 1)",
+          [
+            "==",
+            [
+              "get",
+              "rdCtg"
+            ],
+            1
+          ],
+          "rgba(255, 0, 0, 1)",
+          [
+            "==",
+            [
+              "get",
+              "rdCtg"
+            ],
+            2
+          ],
+          "rgba(0, 0, 255, 1)",
+          "rgba(0, 0, 0, 0)"
+        ]
+      }
+    }
+  ],
+  "id": "gsi-center-line"
+}
